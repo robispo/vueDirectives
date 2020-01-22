@@ -6,11 +6,15 @@ Vue.directive('highlight', {
     // el.style.backgroundColor = 'green';
     // el.style.backgroundColor = binding.value;
 
-    if ((binding.arg == 'background')) {
-      el.style.backgroundColor = binding.value;
-    } else {
-      el.style.color = binding.value;
-    }
+    let delay = binding.modifiers['delayed'] ? 3000 : 0;
+
+    setTimeout(() => {
+      if (binding.arg == 'background') {
+        el.style.backgroundColor = binding.value;
+      } else {
+        el.style.color = binding.value;
+      }
+    }, delay);
   }
 });
 

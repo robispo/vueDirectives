@@ -14,6 +14,8 @@
         <h1>Custom Directives</h1>
         <p v-highlight="'red'">highlight directive</p>
         <p v-highlight:background="'red'">highlight directive</p>
+        <p v-highlight.delayed="'blue'">highlight directive</p>
+        <p v-highlight:background.delayed="'blue'">highlight directive</p>
       </div>
     </div>
   </div>
