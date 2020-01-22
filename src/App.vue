@@ -16,13 +16,51 @@
         <p v-highlight:background="'red'">highlight directive</p>
         <p v-highlight.delayed="'blue'">highlight directive</p>
         <p v-highlight:background.delayed="'blue'">highlight directive</p>
+        <p v-local-highlight:background.delayed.blink="'blue'">
+          local-highlight directive
+        </p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  directives: {
+    'local-highlight': {
+      bind(el, binding, vnode) {
+        let delay = binding.modifiers['delayed'] ? 3000 : 0;
+
+        if (binding.modifiers['blink']) {
+          let mainColor = binding.value;
+          let secondColor = 'grey';
+          let currentColor = secondColor;
+
+          setTimeout(() => {
+            setInterval(() => {
+              currentColor =
+                currentColor == mainColor ? secondColor : mainColor;
+
+              if (binding.arg == 'background') {
+                el.style.backgroundColor = currentColor;
+              } else {
+                el.style.color = currentColor;
+              }
+            }, 1000);
+          }, delay);
+        } else {
+          setTimeout(() => {
+            if (binding.arg == 'background') {
+              el.style.backgroundColor = binding.value;
+            } else {
+              el.style.color = binding.value;
+            }
+          }, delay);
+        }
+      }
+    }
+  }
+};
 </script>
 
 <style></style>
