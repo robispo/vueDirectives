@@ -31,40 +31,40 @@
 </template>
 
 <script>
-export default {
-  directives: {
-    'local-highlight': {
-      bind(el, binding, vnode) {
-        let { mainColor, secondColor, delay } = binding.value;
+  export default {
+    directives: {
+      'local-highlight': {
+        bind(el, binding, vnode) {
+          let { mainColor, secondColor, delay } = binding.value;
 
-        if (binding.modifiers['blink']) {
-          let currentColor = secondColor;
+          if (binding.modifiers['blink']) {
+            let currentColor = secondColor;
 
-          setTimeout(() => {
-            setInterval(() => {
-              currentColor =
-                currentColor == mainColor ? secondColor : mainColor;
+            setTimeout(() => {
+              setInterval(() => {
+                currentColor =
+                  currentColor == mainColor ? secondColor : mainColor;
 
+                if (binding.arg == 'background') {
+                  el.style.backgroundColor = currentColor;
+                } else {
+                  el.style.color = currentColor;
+                }
+              }, 1000);
+            }, delay);
+          } else {
+            setTimeout(() => {
               if (binding.arg == 'background') {
-                el.style.backgroundColor = currentColor;
+                el.style.backgroundColor = mainColor || binding.value;
               } else {
-                el.style.color = currentColor;
+                el.style.color = mainColor || binding.value;
               }
-            }, 1000);
-          }, delay);
-        } else {
-          setTimeout(() => {
-            if (binding.arg == 'background') {
-              el.style.backgroundColor = mainColor || binding.value;
-            } else {
-              el.style.color = mainColor || binding.value;
-            }
-          }, delay);
+            }, delay);
+          }
         }
       }
     }
-  }
-};
+  };
 </script>
 
 <style></style>
